@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { Alert, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import { GroupInputs } from './components/GroupInputs';
 
 export default function App() {
 
@@ -21,30 +22,36 @@ export default function App() {
 
   }
 
+  function limparValores(){
+    setPrimeiroValor(0)
+    setSegundoValor(0)
+    setTotal(0)
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.form}>
 
-        <View style={styles.group}>
-          <Text style={styles.textLabel}> Primeiro Valor</Text>
-          <TextInput keyboardType='decimal-pad' style={styles.inputText}
-            onChangeText={setPrimeiroValor}/>
-        </View>
+        <GroupInputs label="Primeiro Valor" 
+            valueText={primeiroValor}
+            onChangeValue={setPrimeiroValor}/>
 
-        <View style={styles.group}>
-          <Text style={styles.textLabel}> Segundo Valor</Text>
-          <TextInput  keyboardType='decimal-pad' style={styles.inputText} 
-          onChangeText={text => setSegundoValor(text)}/>
-        </View>
+        <GroupInputs label="Segundo Valor" color={styles.pink}
+           valueText={segundoValor}
+         onChangeValue={setSegundoValor}/>
 
-        <Text style={styles.textLabel}> Soma é {total}</Text>
+        <Text style={styles.textSomar}> Soma é {total}</Text>
 
       </View>
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.button}
+        <TouchableOpacity style={[styles.button, { backgroundColor: 'green'}]}
           onPress={calcularValoresTela} 
           onLongPress={calcularValoresTelaAlert}>
             <Text style={styles.textButton}>Somar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button , { backgroundColor: 'orange'}]}
+          onPress={limparValores} >
+            <Text style={styles.textButton}>Limpar</Text>
         </TouchableOpacity>
       </View>
 
@@ -61,32 +68,28 @@ const styles = StyleSheet.create({
     gap: 16,
     padding: 16
   },
+  textSomar: {
+    color: '#fff',
+    fontSize: 28,
+    textAlign: 'center'
+  },
   form : {
     flex: 1,
     backgroundColor: 'red',
     padding: 16,
     width: '100%'
   },
-  textLabel: {
-    fontSize: 20,
-    fontWeight: 'bold'
-  },
-  group: {
-    padding:10,
-    gap: 10
-  },
-  inputText:{
-    backgroundColor:'#fff',
-    padding: 8,
-    fontSize: 20,
-    borderRadius: 5
-  },
+  pink : {
+    color: 'blue'
+  },  
   footer : {
     width: '100%',
-    backgroundColor: 'green'
+    gap: 10,
+    flexDirection: 'row'
   },
   button : {
     alignItems: 'center',
+    flex: 1,
     padding: 10
   },
   textButton: {
